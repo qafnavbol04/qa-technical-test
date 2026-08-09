@@ -1,44 +1,43 @@
-# Defect Report Template
+# Defect Report
 
-> Este archivo es una plantilla. La prueba automatizada asociada actualmente pasa correctamente; por lo tanto, no se registra aquí un defecto confirmado. Si se identifica una desviación real, completar los campos siguientes con evidencia reproducible.
-
-## Defecto
-- **ID:** DF-001
-- **Título:** [Título breve del hallazgo]
-- **Severidad:** [Crítica/Alta/Media/Baja]
-- **Prioridad:** [P0/P1/P2/P3]
+## Resultado de la revisión
+- **ID:** DF-000
+- **Título:** No se identificaron defectos en la ejecución actual
+- **Severidad:** Baja
+- **Prioridad:** P3
 
 ## Entorno de pruebas
-- **Aplicación:** SauceDemo
+- **Aplicación UI:** SauceDemo
 - **Navegador:** Chromium Headless
-- **URL:** https://www.saucedemo.com
-- **Suite:** `ui/tests/flujo2-cart.spec.ts`
-- **Fecha de ejecución:** 08/08/2026
+- **URL UI:** https://www.saucedemo.com
+- **Suite UI:** `ui/tests/flujo1-checkout.spec.ts`, `ui/tests/flujo2-cart.spec.ts`
+- **Aplicación API:** Restful Booker
+- **URL API:** https://restful-booker.herokuapp.com
+- **Suite API:** `api/tests/booking-crud.spec.ts`, `api/tests/booking-negative.spec.ts`
+- **Fecha de ejecución:** 09/08/2026
 
 ## Descripción
-[Describir el comportamiento observado y el alcance del impacto.]
+Se ejecutaron los flujos de UI y los casos de API definidos en el repositorio. No se identificaron desviaciones funcionales en los pasos automatizados ni en las validaciones de datos principales.
 
-## Pasos para reproducir
-1. [Paso reproducible 1]
-2. [Paso reproducible 2]
-3. [Paso reproducible 3]
+## Pasos ejecutados
+1. Login en SauceDemo con `standard_user` y `secret_sauce`.
+2. Flujo de compra dinámico con selección de producto más barato y más caro.
+3. Validación de cálculo: Subtotal + Impuesto = Total.
+4. Flujo de carrito con 3 productos, eliminación del producto más caro y validación de mensajes de checkout.
+5. Ciclo CRUD de booking en Restful Booker con creación, lectura, actualización y eliminación.
+6. Casos negativos de API: payload incompleto, booking no existente, operaciones sin autenticación y cuerpo vacío.
 
 ## Resultado esperado
-[Comportamiento esperado.]
+Las pruebas automatizadas debían completarse sin errores y las validaciones de UI/API debían pasar correctamente.
 
 ## Resultado actual
-[Comportamiento actual observado.]
+Todas las pruebas definidas pasaron según la ejecución automatizada disponible en el repositorio. No se encontraron defectos en los flujos revisados.
 
 ## Evidencia
-- Captura de pantalla o video generado en `playwright-report`.
-- Trace de Playwright disponible en `playwright-results`.
-- Logs de ejecución y pasos reproducidos.
-
-## Impacto
-- El error bloquea la experiencia de checkout y puede permitir transacciones incompletas.
-- Alto impacto en la validación de datos de usuario.
+- Reportes de Playwright generados en `playwright-report`.
+- Reporte de JMeter generado en `performance/reports/html-report`.
+- Ejecución de pipeline GitHub con evidencia de run exitoso y run fallido controlado.
 
 ## Recomendación
-- Revisar la validación de campos obligatorios en la página de checkout.
-- Asegurar que el mensaje de error se exponga en el elemento `[data-test="error"]`.
-- Agregar pruebas de regresión que validen errores de formulario en UI.
+- Mantener esta documentación como registro de verificación cuando no se detecten defectos.
+- Si se identifica un comportamiento anómalo en futuras ejecuciones, registrar el hallazgo con pasos y evidencia detallada aquí.

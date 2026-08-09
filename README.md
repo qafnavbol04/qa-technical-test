@@ -86,6 +86,10 @@ El workflow `.github/workflows/ci-cd-pipeline.yml` está diseñado para ejecutar
 - ejecución de prueba de performance
 - publicación de reportes HTML como artifacts
 
+### Evidencia de pipeline
+- Ejecución exitosa: `CI/CD Pipeline #9` ✅
+- Ejecución fallida controlada: `CI/CD Pipeline #7` con `simulate_failure=true` ❌
+
 ## Resultados y evidencia
 - Reportes de Playwright en `playwright-report`
 - Resultados de JMeter en `performance/reports/html-report`
