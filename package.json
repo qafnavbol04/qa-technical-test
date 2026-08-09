@@ -1,0 +1,22 @@
+{
+  "name": "ceiba-qatest-saucebooker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QA automation repository for SauceDemo UI and Restful Booker API with Playwright and JMeter.",
+  "scripts": {
+    "prepare": "npx playwright install --with-deps",
+    "test:ui": "npx playwright test ui/tests --project=ui --reporter=html --output=playwright-results",
+    "test:api": "npx playwright test api/tests --config=playwright.config.ts --project=api --reporter=list",
+    "test:performance": "jmeter -n -t performance/booking_load_test.jmx -l performance/results.jtl -e -o performance/reports/html-report",
+    "test:all": "npm run test:api && npm run test:ui",
+    "test:ci": "npm run test:all && npm run test:performance",
+    "report": "npx playwright show-report",
+    "clean": "rimraf playwright-results performance/results.jtl performance/reports/html-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "typescript": "^5.8.0",
+    "ts-node": "^10.9.1",
+    "rimraf": "^5.0.0"
+  }
+}
