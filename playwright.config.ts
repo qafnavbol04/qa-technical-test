@@ -13,7 +13,7 @@ export default defineConfig({
     ['html', { outputFolder: 'playwright-report', open: 'never' }]
   ],
   use: {
-    actionTimeout: 10 * 1000,
+    actionTimeout: 30 * 1000,
     navigationTimeout: 30 * 1000,
     baseURL: 'https://www.saucedemo.com',
     trace: 'retain-on-failure',

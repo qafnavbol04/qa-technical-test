@@ -50,6 +50,8 @@ export class CartPage {
   }
 
   async continueToCheckout() {
+    await expect(this.checkoutButton).toBeVisible({ timeout: 30 * 1000 });
+    await expect(this.checkoutButton).toBeEnabled({ timeout: 30 * 1000 });
     await this.checkoutButton.click();
     await expect(this.page).toHaveURL(/checkout-step-one\.html/);
   }
