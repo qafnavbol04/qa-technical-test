@@ -21,6 +21,13 @@ Definir un plan de pruebas práctico y sostenible para validar la solución QA d
 - Validaciones de cálculo financiero y estado del carrito.
 - Uso de auto-waiting nativo y aserciones explícitas.
 
+
+### API - Casos negativos
+
+- Creación de reserva con datos incompletos (faltan `firstname`/`lastname`) — esperar código de error y no crear recurso.
+- Creación de reserva con payload vacío — validar manejo y código de error apropiado.
+- Validaciones de autenticación: intentos de modificación/deleción sin token deben fallar.
+
 ### API
 - Ciclo de vida CRUD usando token de autenticación válido.
 - Validación de datos enviados vs. recibidos.
