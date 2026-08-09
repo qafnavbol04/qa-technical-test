@@ -66,6 +66,23 @@ La configuración detallada de Playwright se encuentra en `playwright.config.ts`
   npm run test:ui
   ```
 
+Para ejecutar las pruebas UI mostrando el navegador:
+```bash
+npm run test:ui:headed
+```
+
+Para una demostración más controlada usando solamente Chromium:
+```bash
+npm run test:ui:headed:chromium
+```
+
+Para abrir Chromium y pausar la prueba para avanzar paso a paso:
+```bash
+npm run test:ui:debug
+```
+
+No agregues `--list` si quieres ejecutar la prueba: ese parámetro solo muestra los casos y no abre el navegador.
+
 Para ejecutar solamente Chromium:
 ```bash
 npx playwright test ui/tests --project=ui
