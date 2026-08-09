@@ -37,6 +37,18 @@ Este repositorio incluye el plan de JMeter en `performance/booking_load_test.jmx
 - Archivo de resultados JTL: `performance/results.jtl`
 - Reporte HTML: `performance/reports/html-report`
 
+Resultado verificado en esta ejecución local:
+
+- Muestras ejecutadas: 9,645
+- Requests exitosos: 9,645 / 9,645 (100%)
+- Errores: 0
+- Throughput promedio: 80.3 req/s
+- Latencia promedio: 110 ms
+- Máxima latencia observada: 1736 ms
+- Tiempo total de ejecución: 120 segundos
+
+El reporte HTML quedó generado en `performance/reports/html-report/index.html` y puede compartirse directamente o comprimirse para adjuntarlo a una release.
+
 Recomendación para publicar los artefactos en la release `v1.0` (o cualquier tag):
 
 1. Ejecutar la prueba localmente (asegúrate de tener JMeter instalado):

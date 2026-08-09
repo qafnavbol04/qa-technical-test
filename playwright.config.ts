@@ -33,6 +33,22 @@ export default defineConfig({
       }
     },
     {
+      name: 'ui-firefox',
+      testMatch: 'ui/tests/**/*.spec.ts',
+      use: {
+        browserName: 'firefox',
+        ...devices['Desktop Firefox']
+      }
+    },
+    {
+      name: 'ui-webkit',
+      testMatch: 'ui/tests/**/*.spec.ts',
+      use: {
+        browserName: 'webkit',
+        ...devices['Desktop Safari']
+      }
+    },
+    {
       name: 'api',
       testMatch: 'api/tests/**/*.spec.ts',
       use: {

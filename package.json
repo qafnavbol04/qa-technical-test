@@ -5,7 +5,7 @@
   "description": "QA automation repository for SauceDemo UI and Restful Booker API with Playwright and JMeter.",
   "scripts": {
     "prepare": "npx playwright install --with-deps",
-    "test:ui": "npx playwright test ui/tests --project=ui --reporter=html --output=playwright-results",
+    "test:ui": "npx playwright test ui/tests --project=ui --project=ui-firefox --project=ui-webkit --reporter=html --output=playwright-results",
     "test:api": "npx playwright test api/tests --config=playwright.config.ts --project=api --reporter=list",
     "test:performance": "jmeter -n -t performance/booking_load_test.jmx -l performance/results.jtl -e -o performance/reports/html-report",
     "test:all": "npm run test:api && npm run test:ui",
