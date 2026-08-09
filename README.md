@@ -1,5 +1,7 @@
 # QA Automation Suite - Ceiba Software
 
+![CI](https://github.com/qafnavbol04/qa-technical-test/actions/workflows/ci-cd-pipeline.yml/badge.svg)
+
 ## Resumen del proyecto
 Este repositorio contiene una solución de automatización integral para la prueba técnica de Ceiba Software, incluyendo:
 - Automatización de UI para SauceDemo con Playwright y TypeScript.
