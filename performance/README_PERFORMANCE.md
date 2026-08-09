@@ -39,13 +39,19 @@ Este repositorio incluye el plan de JMeter en `performance/booking_load_test.jmx
 
 Resultado verificado en esta ejecución local:
 
-- Muestras ejecutadas: 9,645
-- Requests exitosos: 9,645 / 9,645 (100%)
+- Muestras ejecutadas: 10,193
+- Requests exitosos: 10,193 / 10,193 (100%)
 - Errores: 0
-- Throughput promedio: 80.3 req/s
-- Latencia promedio: 110 ms
-- Máxima latencia observada: 1736 ms
+- Throughput promedio: 84.8 req/s
+- Latencia promedio: 104 ms
+- P90: 112 ms
+- P95: 118 ms
+- Máxima latencia observada: 1183 ms
 - Tiempo total de ejecución: 120 segundos
+
+### Conclusión
+
+Con base en la ejecución verificada, el endpoint soporta adecuadamente la carga definida: el 100% de las 10,193 solicitudes fue exitoso, el P95 fue inferior a 2,000 ms y no se observaron errores durante los 120 segundos. Estos resultados representan una ejecución local; en un proyecto real se repetiría la medición en un entorno controlado y con umbrales históricos.
 
 El reporte HTML quedó generado en `performance/reports/html-report/index.html` y puede compartirse directamente o comprimirse para adjuntarlo a una release.
 

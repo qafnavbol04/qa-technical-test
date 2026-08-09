@@ -1,10 +1,12 @@
 # Defect Report Template
 
+> Este archivo es una plantilla. La prueba automatizada asociada actualmente pasa correctamente; por lo tanto, no se registra aquí un defecto confirmado. Si se identifica una desviación real, completar los campos siguientes con evidencia reproducible.
+
 ## Defecto
 - **ID:** DF-001
-- **Título:** Error de validación de checkout cuando faltan datos obligatorios
-- **Severidad:** Alta
-- **Prioridad:** P1
+- **Título:** [Título breve del hallazgo]
+- **Severidad:** [Crítica/Alta/Media/Baja]
+- **Prioridad:** [P0/P1/P2/P3]
 
 ## Entorno de pruebas
 - **Aplicación:** SauceDemo
@@ -14,22 +16,18 @@
 - **Fecha de ejecución:** 08/08/2026
 
 ## Descripción
-En el flujo de carrito, al intentar continuar al checkout sin completar los datos obligatorios, el sistema debe mostrar un mensaje de error claro y mantener al usuario en la misma página de ingreso de datos.
+[Describir el comportamiento observado y el alcance del impacto.]
 
 ## Pasos para reproducir
-1. Ingresar a SauceDemo con `standard_user` / `secret_sauce`.
-2. Agregar 3 productos diferentes al carrito.
-3. Eliminar el producto de mayor precio.
-4. Presionar `CHECKOUT`.
-5. Hacer clic en `CONTINUE` sin completar los campos de nombre, apellido y código postal.
+1. [Paso reproducible 1]
+2. [Paso reproducible 2]
+3. [Paso reproducible 3]
 
 ## Resultado esperado
-- Se muestra el mensaje de error `Error: First Name is required`.
-- El usuario permanece en la página `checkout-step-one.html`.
-- El estado del carrito no cambia.
+[Comportamiento esperado.]
 
 ## Resultado actual
-- [Describir el comportamiento observado en el hallazgo real, por ejemplo: no se muestra mensaje o el flujo avanza incorrectamente].
+[Comportamiento actual observado.]
 
 ## Evidencia
 - Captura de pantalla o video generado en `playwright-report`.

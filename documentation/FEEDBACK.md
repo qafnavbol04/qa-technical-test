@@ -10,7 +10,8 @@ El principal riesgo fue la dependencia de aplicaciones externas (SauceDemo y Res
 - Prueba de carga de `GET /booking` para asegurar estabilidad bajo concurrencia.
 
 ## 3. ¿Qué pruebas adicionales automatizaría?
-- Escenarios negativos de API para datos inválidos y tokens expirados.
+- Escenarios adicionales de API para tokens expirados y payloads con tipos inválidos.
+- Ya se cubrieron booking inexistente y operaciones de actualización/eliminación sin autenticación.
 - Validaciones de seguridad básicas en API (headers, auth y CORS).
 - Pruebas cross-browser en Playwright para asegurar compatibilidad en Chrome/Firefox.
 - Pruebas de regresión data-driven para combos de productos y datos de checkout.

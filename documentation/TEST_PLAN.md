@@ -40,6 +40,21 @@ Definir un plan de pruebas práctico y sostenible para validar la solución QA d
 - 10 usuarios virtuales, 30s ramp-up, 120s de duración.
 - Reporte de throughput, porcentaje de errores, tiempos promedio y percentiles.
 
+### Definition of Ready (DoR)
+- Alcance y prioridad de los flujos definidos.
+- Datos de prueba y credenciales disponibles.
+- Ambientes SauceDemo y Restful Booker accesibles.
+- Criterios de aceptación y evidencia esperada acordados.
+- Dependencias de ejecución instaladas o automatizadas en CI.
+
+### Definition of Done (DoD)
+- Casos positivos y negativos prioritarios automatizados.
+- Aserciones de negocio, contrato, estado y tiempos implementadas.
+- Pruebas independientes, repetibles y sin esperas fijas.
+- Reportes y evidencias generados.
+- Pipeline ejecutado en escenario exitoso y escenario fallido controlado.
+- Hallazgos documentados y README actualizado.
+
 ## Diseño de casos de prueba
 ### Priorización
 1. Validación de la experiencia de compra completa en UI.
