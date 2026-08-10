@@ -7,8 +7,8 @@ import { CheckoutPage } from '../pages/CheckoutPage';
 const USERNAME = 'standard_user';
 const PASSWORD = 'secret_sauce';
 
-test.describe('SauceDemo flujo 2 - carrito y validaciones', () => {
-  test('Debe agregar 3 productos dinámicos, eliminar el más caro y validar errores de checkout', async ({ page }) => {
+test.describe('Carrito', () => {
+  test('Elimina caro y valida checkout', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const inventoryPage = new InventoryPage(page);
     const cartPage = new CartPage(page);

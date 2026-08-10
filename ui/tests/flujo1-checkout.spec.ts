@@ -7,8 +7,8 @@ import { CheckoutPage } from '../pages/CheckoutPage';
 const USERNAME = 'standard_user';
 const PASSWORD = 'secret_sauce';
 
-test.describe('SauceDemo flujo 1 - selección dinámica y validación de compra', () => {
-  test('Debe comprar el producto más barato y el más caro y verificar el total con impuesto', async ({ page }) => {
+test.describe('Compra extremo', () => {
+  test('Compra extremos y valida total', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const inventoryPage = new InventoryPage(page);
     const cartPage = new CartPage(page);

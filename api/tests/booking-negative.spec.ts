@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Restful Booker negative booking tests', () => {
+test.describe('Reservas negativas', () => {
   const existingBookingId = 1;
 
-  test('Creating a booking with missing required fields returns an error', async ({ request }) => {
+  test('Reserva incompleta falla', async ({ request }) => {
     const incompletePayload = {
-      // missing firstname and lastname
+      // faltan firstname y lastname
       totalprice: 100,
       depositpaid: false,
       bookingdates: {
@@ -20,17 +20,17 @@ test.describe('Restful Booker negative booking tests', () => {
       headers: { 'Content-Type': 'application/json' }
     });
 
-    // The service should not accept incomplete bookings — expect client/server error
+    // El servicio debe rechazar reservas incompletas
     expect(createResponse.status()).toBeGreaterThanOrEqual(400);
   });
 
-  test('Getting a booking that does not exist returns 404', async ({ request }) => {
+  test('Reserva inexistente 404', async ({ request }) => {
     const response = await request.get('/booking/9999999', { timeout: 2000 });
 
     expect(response.status()).toBe(404);
   });
 
-  test('Updating a booking without authentication is rejected', async ({ request }) => {
+  test('Actualización sin auth rechaza', async ({ request }) => {
     const response = await request.put(`/booking/${existingBookingId}`, {
       data: {
         firstname: 'Unauthorized',
@@ -49,7 +49,7 @@ test.describe('Restful Booker negative booking tests', () => {
     expect([401, 403]).toContain(response.status());
   });
 
-  test('Deleting a booking without authentication is rejected', async ({ request }) => {
+  test('Eliminación sin auth rechaza', async ({ request }) => {
     const response = await request.delete(`/booking/${existingBookingId}`, {
       timeout: 2000
     });
@@ -57,7 +57,7 @@ test.describe('Restful Booker negative booking tests', () => {
     expect([401, 403]).toContain(response.status());
   });
 
-  test('Creating a booking with empty body returns an error', async ({ request }) => {
+  test('Reserva cuerpo vacío falla', async ({ request }) => {
     const createResponse = await request.post('/booking', {
       data: {},
       timeout: 2000,

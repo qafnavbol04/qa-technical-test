@@ -1,6 +1,6 @@
 import { test, expect, request } from '@playwright/test';
 
-test.describe('Restful Booker booking CRUD', () => {
+test.describe('CRUD de reservas', () => {
   const authPayload = {
     username: 'admin',
     password: 'password123'
@@ -30,7 +30,7 @@ test.describe('Restful Booker booking CRUD', () => {
     additionalneeds: 'Late Checkout'
   };
 
-  test('Debe ejecutar el ciclo CRUD completo y limpiar datos', async ({ request }) => {
+  test('CRUD completo', async ({ request }) => {
     const authStart = Date.now();
     const authResponse = await request.post('/auth', {
       data: authPayload,

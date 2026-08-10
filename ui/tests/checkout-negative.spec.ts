@@ -7,8 +7,8 @@ import { CheckoutPage } from '../pages/CheckoutPage';
 const USERNAME = 'standard_user';
 const PASSWORD = 'secret_sauce';
 
-test.describe('Checkout negative scenarios', () => {
-  test('Errors when required fields are missing', async ({ page }) => {
+test.describe('Checkout negativo', () => {
+  test('Valida campos faltantes', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const inventoryPage = new InventoryPage(page);
     const cartPage = new CartPage(page);
@@ -21,16 +21,16 @@ test.describe('Checkout negative scenarios', () => {
     await inventoryPage.openCart();
     await cartPage.continueToCheckout();
 
-    // Submit without any data
+    // Enviar sin ningún dato
     await checkoutPage.continueButton.click();
     await expect(checkoutPage.errorMessage).toHaveText('Error: First Name is required');
 
-    // Fill first name only
+    // Llenar solo nombre
     await checkoutPage.firstNameInput.fill('Juan');
     await checkoutPage.continueButton.click();
     await expect(checkoutPage.errorMessage).toHaveText('Error: Last Name is required');
 
-    // Fill last name, leave postal code empty
+    // Llenar apellido y dejar código postal vacío
     await checkoutPage.lastNameInput.fill('Perez');
     await checkoutPage.continueButton.click();
     await expect(checkoutPage.errorMessage).toHaveText('Error: Postal Code is required');
