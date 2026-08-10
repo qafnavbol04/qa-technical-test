@@ -94,6 +94,12 @@ npx playwright test ui/tests/flujo1-checkout.spec.ts --project=ui
 npx playwright test ui/tests/flujo2-cart.spec.ts --project=ui
 ```
 
+### Nombres de pruebas UI actuales
+- `Compra extremo`: Compra extremos y valida total
+- `Carrito`: Elimina caro y valida checkout
+- `Checkout negativo`: Valida campos faltantes
+- `Login negativo`: Muestra error credenciales inválidas
+
 ### API
 - Ejecutar tests API:
   ```bash
