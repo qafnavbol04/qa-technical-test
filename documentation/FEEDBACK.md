@@ -1,115 +1,118 @@
-# Feedback y conclusiones de la prueba técnica
+﻿# Feedback y conclusiones de la prueba técnica
 
 ## Contexto de la evaluación
 
-Como QA Automation, enfoqué la solución en cubrir los riesgos más importantes de los dos servicios definidos en la prueba:
+En esta prueba quise automatizar lo más importante sin perder de vista que las validaciones se ejecutan contra servicios externos.
 
-- SauceDemo para validar la experiencia de compra desde la interfaz.
-- Restful Booker para validar el ciclo de vida de una reserva mediante API.
-- JMeter para observar el comportamiento de `GET /booking` bajo carga.
-- GitHub Actions para ejecutar las pruebas de forma repetible y publicar la evidencia.
+- SauceDemo para validar el flujo de compra por interfaz.
+- Restful Booker para validar el ciclo de vida de una reserva por API.
+- JMeter para medir cómo responde `GET /booking` bajo carga.
+- GitHub Actions para que la ejecución sea repetible y deje evidencia.
 
-La conclusión se basa en los escenarios automatizados, los resultados documentados y el alcance definido. No pretende afirmar que las aplicaciones no tengan ningún defecto, sino que no se encontraron desviaciones dentro de los flujos y ambientes evaluados.
+La evaluación se basa en los escenarios desarrollados y la ejecución realizada. No se identificaron defectos en los flujos cubiertos, aunque esa conclusión aplica al alcance y al contexto de esta ejecución.
 
 ## 1. ¿Cuál fue el principal riesgo identificado?
 
-El principal riesgo identificado fue la dependencia de servicios externos. SauceDemo y Restful Booker están fuera del control del proyecto, por lo que una indisponibilidad, un cambio en la interfaz, una modificación del contrato API o una variación en los tiempos de respuesta puede afectar la ejecución de las pruebas.
+El mayor riesgo es la dependencia de servicios externos.
 
-En SauceDemo, el flujo depende de elementos como el catálogo, el carrito y el checkout. En Restful Booker, el flujo depende de que estén disponibles los endpoints de autenticación y reservas. Además, la prueba de performance se ejecuta contra un servicio compartido, por lo que sus resultados pueden variar entre ejecuciones.
+SauceDemo y Restful Booker no forman parte del código del repositorio, así que si cambia la interfaz, el contrato de la API o la disponibilidad del servicio, una prueba puede fallar aunque el script esté bien.
 
-### ¿Cómo se mitigó en esta solución?
+Además, la prueba de carga usa un servicio compartido, lo que introduce más variabilidad en los resultados.
 
-- Los productos no se seleccionan por nombre ni por una posición fija. Se leen sus precios y se seleccionan dinámicamente el menor, el mayor o los tres productos requeridos.
-- El flujo UI utiliza Page Object Model, lo que concentra los selectores y reduce el impacto de cambios en la interfaz.
-- El `bookingid` se obtiene de la respuesta de creación y se reutiliza en las operaciones posteriores.
-- El ciclo API termina eliminando la reserva creada y valida con un `404` que ya no esté disponible.
-- La prueba de performance incluye un warm-up para reducir el efecto de la primera petición sobre las mediciones.
-- Los reportes y evidencias se publican desde el pipeline para facilitar el análisis posterior.
+### ¿Cómo se mitigó?
 
-### ¿Qué limitación permanece?
+- En UI la selección de productos se hace por precio, no por nombre o posición fija.
+- Se usa Page Object Model para tener los selectores centralizados y facilitar los cambios.
+- En API el `bookingid` se obtiene del flujo de creación y se reutiliza en las siguientes operaciones.
+- El escenario CRUD elimina la reserva creada y valida que ya no exista.
+- La prueba de carga incluye un warm-up para estabilizar las mediciones.
 
-El aislamiento no es total porque se utilizan servicios públicos. En un proyecto real complementaría estas pruebas con ambientes controlados, datos propios y pruebas simuladas para separar los defectos de la aplicación de los problemas de disponibilidad externa.
+### ¿Qué limitación queda?
+
+Aún no hay un aislamiento completo. En un proyecto real, sería mejor contar con un ambiente controlado y datos propios para distinguir mejor un fallo de la aplicación de un problema de disponibilidad externa.
 
 ## 2. ¿Qué pruebas considera prioritarias para una regresión?
 
-Priorizaría las pruebas que representan la ruta crítica del negocio y que podrían afectar directamente la experiencia del usuario o la integridad de los datos.
+Las pruebas más importantes son las que cubren el flujo de negocio y la consistencia de los datos.
 
-### Prioridad P0
+### Prioridad alta
 
-- **Compra completa en SauceDemo:** login, selección dinámica del producto más barato y más caro, carrito, checkout, cálculo del total y confirmación.
-- **Carrito:** agregar tres productos, validar el contador, eliminar el producto de mayor precio y comprobar que el estado se actualice.
-- **Ciclo CRUD de Restful Booker:** autenticar, crear, consultar, actualizar, consultar nuevamente y eliminar una reserva.
-- **Prueba de carga de `GET /booking`:** verificar que el endpoint mantenga respuestas exitosas y tiempos aceptables bajo la carga definida.
+- Compra completa en SauceDemo: login, seleccionar producto más barato y más caro, carrito, checkout y validar el total.
+- Carrito: agregar tres productos, eliminar el más caro y verificar que el pedido se actualiza.
+- Ciclo CRUD en Restful Booker: crear, leer, actualizar, leer de nuevo y eliminar una reserva.
+- Prueba de carga de `GET /booking`: validar que el endpoint responde correctamente bajo la carga definida.
 
-### Prioridad P1
+### Prioridad media
 
 - Checkout sin datos obligatorios.
 - Login con credenciales inválidas.
-- Payloads incompletos o vacíos en la API.
-- Intentos de actualizar o eliminar una reserva sin autenticación.
+- Peticiones API con payload incompleto o vacío.
+- Operaciones de actualización o eliminación sin autenticación.
 
-Estas pruebas son prioritarias porque cubren tanto el camino feliz como los errores más probables en formularios, autorización, datos y operación del servicio.
+Estas pruebas protegen tanto el camino feliz como los rechazos esperados.
 
 ## 3. ¿Qué pruebas adicionales automatizaría?
 
-La solución ya incluye ejecución UI en Chromium, Firefox y WebKit mediante los proyectos configurados en Playwright. Como siguientes pasos, ampliaría la cobertura en estas áreas:
+La base actual está bien, pero hay oportunidades para ampliar la cobertura.
 
-- Probar los usuarios adicionales que ofrece SauceDemo, especialmente `locked_out_user`, `problem_user`, `performance_glitch_user` y `error_user`.
+- Probar otros usuarios de SauceDemo: `locked_out_user`, `problem_user`, `performance_glitch_user` y `error_user`.
 - Validar tokens inválidos, expirados o malformados en Restful Booker.
-- Probar tipos de datos incorrectos, fechas inválidas, valores negativos y campos adicionales no esperados.
-- Validar de forma específica headers, formatos JSON, métodos HTTP no permitidos y comportamiento ante errores del servicio.
-- Incorporar pruebas de accesibilidad y navegación básica por teclado en la interfaz.
-- Agregar escenarios data-driven para ejecutar el mismo flujo con distintos datos de checkout y combinaciones de productos.
-- Probar fallas de red, timeouts y respuestas lentas para verificar el comportamiento de la automatización.
-- Validar el endpoint `/ping` como smoke test antes de ejecutar el resto de la suite API.
-- Agregar pruebas de `PATCH` para complementar la cobertura de actualización parcial documentada por Restful Booker.
+- Probar datos mal formados, fechas inválidas, valores negativos y campos inesperados.
+- Verificar headers incorrectos o métodos HTTP no permitidos.
+- Añadir pruebas básicas de accesibilidad y navegación por teclado en la UI.
+- Ejecutar escenarios data-driven con distintas combinaciones de productos y datos de checkout.
+- Incluir escenarios de fallos de red, timeouts y respuestas lentas.
+- Hacer un smoke test de `/ping` antes de ejecutar la suite API.
+- Agregar pruebas de `PATCH` para completar la cobertura de actualización parcial.
 
 ## 4. ¿Qué oportunidades de mejora identifica en la solución desarrollada?
 
-La solución cumple el alcance principal, pero todavía puede evolucionar en mantenibilidad, seguridad y observabilidad.
+La solución cumple el objetivo, pero puede mejorar en mantenimiento y confiabilidad.
 
 ### Datos y configuración
 
-Actualmente algunos datos de prueba están definidos directamente en los archivos de prueba. Para un proyecto real, separaría las credenciales, URLs y datos variables usando variables de entorno, secretos del pipeline y builders o fixtures de datos.
+Hoy algunos datos de prueba están en el código. En un entorno real movería credenciales, URLs y valores variables a variables de entorno o a una configuración centralizada.
 
-### Limpieza de datos
+### Manejo de limpieza
 
-El flujo CRUD elimina la reserva al final y valida su desaparición. Como mejora, protegería la limpieza con un bloque `try/finally` o con un mecanismo de teardown para que la reserva también se elimine si una validación intermedia falla.
+El flujo CRUD elimina la reserva al final, pero conviene proteger esa limpieza con un `try/finally` o un teardown para que la reserva se borre aun si falla una validación intermedia.
 
 ### Reportes
 
-La solución genera reportes de Playwright y JMeter. Como siguiente paso, incorporaría un historial de ejecuciones, tendencias de duración y alertas cuando aumenten los fallos o se deterioren los percentiles de performance.
+Ya se generan reportes de Playwright y JMeter. Una mejora sería conservar un historial de ejecuciones, métricas de tendencia y alertas cuando cambien los tiempos o los errores.
 
 ### Cobertura funcional
 
-Ampliaría la cobertura de accesibilidad, seguridad básica, usuarios alternativos, datos inválidos y escenarios de red. También formalizaría una matriz de trazabilidad entre requisito, caso de prueba, resultado y evidencia.
+Se puede ampliar hacia accesibilidad, seguridad básica, usuarios alternativos, datos inválidos y escenarios de red. También sería útil una matriz de trazabilidad entre requisitos, casos de prueba y evidencia.
 
 ### Pipeline
 
-Separaría el pipeline en jobs independientes para API, UI y performance. Así sería más fácil identificar qué capa falló y evitaría que una prueba de carga larga bloquee innecesariamente la retroalimentación rápida de UI o API.
+Separar el pipeline en jobs independientes para UI, API y performance facilita encontrar qué capa falló. También evita que una prueba de carga larga bloquee la retroalimentación rápida de las pruebas UI o API.
 
 ## 5. Si estas pruebas fueran llevadas a un proyecto real, ¿qué mejoraría de la estrategia propuesta?
 
-En un proyecto real comenzaría por establecer ambientes de prueba dedicados y datos controlados. Esto permitiría diferenciar un defecto funcional de una falla causada por disponibilidad, cambios o saturación de un servicio externo.
+En un proyecto real reforzaría los ambientes de prueba y usaría datos controlados.
 
-También organizaría la estrategia en diferentes niveles:
+Eso ayuda a distinguir un defecto real de un falso negativo causado por disponibilidad o cambios externos.
 
-1. **Smoke tests:** validar rápidamente que la aplicación y sus servicios estén disponibles.
-2. **Pruebas API:** validar reglas, contratos y datos con mayor velocidad que la UI.
-3. **Pruebas UI:** cubrir los flujos críticos que representan valor para el usuario.
-4. **Pruebas de regresión:** ejecutar los escenarios estables antes de liberar cambios.
-5. **Performance:** ejecutar mediciones controladas y compararlas contra una línea base histórica.
+### Estrategia por niveles
 
-Además, integraría la automatización con Jira o Azure Boards para relacionar historias de usuario, criterios de aceptación, casos, defectos y evidencias. En un equipo Scrum, los criterios de aceptación y la Definition of Done deberían incluir la ejecución de las pruebas prioritarias. En un flujo Kanban, usaría estados claros para identificar pruebas pendientes, fallidas, bloqueadas, corregidas y cerradas.
+1. Smoke tests para validar disponibilidad.
+2. Pruebas API para validar reglas y contratos.
+3. Pruebas UI para los flujos críticos.
+4. Pruebas de regresión para escenarios estables.
+5. Performance con comparación contra una línea base.
+
+También integraría la automatización con la gestión de requerimientos o incidencias, para que quede claro qué se cubre y qué quedó pendiente. En Scrum, esto debería alinearse con la Definition of Done; en Kanban, con estados claros de prueba.
 
 ## Resultado de performance observado
 
-En la ejecución documentada de JMeter se obtuvieron 10.193 muestras, 100% de solicitudes exitosas, cero errores, latencia promedio de 104 ms, P90 de 112 ms, P95 de 118 ms y throughput promedio de 84,8 solicitudes por segundo.
+En la ejecución registrada, JMeter entregó 10.193 muestras, 100% de solicitudes exitosas, cero errores, latencia promedio de 104 ms, P90 de 112 ms, P95 de 118 ms y throughput promedio de 84,8 solicitudes por segundo.
 
-Con esos datos, considero que `GET /booking` soportó adecuadamente la carga definida para esta ejecución, ya que el P95 estuvo por debajo del umbral de 2.000 ms y no se observaron errores. Esta conclusión es válida para el ambiente y momento de la medición; en un proyecto real repetiría la prueba en un ambiente controlado y compararía el resultado con una línea base.
+Ese resultado indica que `GET /booking` se comportó bien en la carga definida. Esta conclusión aplica al ambiente y momento de la medición; en un proyecto real conviene repetir la prueba en un entorno controlado y con un historial de comparación.
 
-## Conclusión personal como QA Automation
+## Conclusión personal
 
-La prioridad de esta solución no fue crear una gran cantidad de pruebas, sino automatizar los escenarios que representan mayor riesgo: comprar, gestionar el carrito, validar errores, administrar una reserva y observar el comportamiento de la API bajo carga.
+El foco fue automatizar los escenarios de mayor riesgo: compra, carrito, checkout, validaciones negativas, ciclo CRUD de reserva y carga.
 
-La automatización permite repetir estos escenarios con menor esfuerzo y detectar regresiones rápidamente. Sin embargo, no reemplaza el análisis funcional ni el criterio del tester. Por eso, además de implementar los casos, documenté riesgos, resultados, limitaciones y mejoras posibles.
+La automatización ayuda a repetir esos escenarios con menos esfuerzo y a detectar regresiones más rápido. Pero no reemplaza el criterio del tester, por eso también dejo registrado el riesgo y las mejoras posibles.
