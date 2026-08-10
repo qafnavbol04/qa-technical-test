@@ -8,24 +8,26 @@
 
 ## Entorno de pruebas
 - **Aplicación UI:** SauceDemo
-- **Navegador:** Chromium Headless
+- **Navegadores:** Chromium, Firefox y WebKit en modo headless
 - **URL UI:** https://www.saucedemo.com
 - **Suite UI:** `ui/tests/flujo1-checkout.spec.ts`, `ui/tests/flujo2-cart.spec.ts`
 - **Aplicación API:** Restful Booker
 - **URL API:** https://restful-booker.herokuapp.com
 - **Suite API:** `api/tests/booking-crud.spec.ts`, `api/tests/booking-negative.spec.ts`
-- **Fecha de ejecución:** 09/08/2026
+- **Fecha de ejecución funcional:** 10/08/2026
 
 ## Descripción
 Se ejecutaron los flujos de UI y los casos de API definidos en el repositorio. No se identificaron desviaciones funcionales en los pasos automatizados ni en las validaciones de datos principales.
 
 ## Pasos ejecutados
-1. Login en SauceDemo con `standard_user` y `secret_sauce`.
-2. Flujo de compra dinámico con selección de producto más barato y más caro.
-3. Validación de cálculo: Subtotal + Impuesto = Total.
-4. Flujo de carrito con 3 productos, eliminación del producto más caro y validación de mensajes de checkout.
-5. Ciclo CRUD de booking en Restful Booker con creación, lectura, actualización y eliminación.
-6. Casos negativos de API: payload incompleto, booking no existente, operaciones sin autenticación y cuerpo vacío.
+1. Ejecución de los 12 escenarios UI en Chromium, Firefox y WebKit.
+2. Login en SauceDemo con `standard_user` y `secret_sauce`.
+3. Flujo de compra dinámico con selección de producto más barato y más caro.
+4. Validación de cálculo: Subtotal + Impuesto = Total.
+5. Flujo de carrito con 3 productos, eliminación del producto más caro y validación de mensajes de checkout.
+6. Ciclo CRUD de booking en Restful Booker con creación, lectura, actualización y eliminación.
+7. Casos negativos de API: payload incompleto, booking no existente, operaciones sin autenticación y cuerpo vacío.
+8. Prueba de carga de `GET /booking` con 8.491 muestras, 0 errores y P95 de 179 ms; se observó un máximo aislado de 6.149 ms.
 
 ## Resultado esperado
 Las pruebas automatizadas debían completarse sin errores y las validaciones de UI/API debían pasar correctamente.

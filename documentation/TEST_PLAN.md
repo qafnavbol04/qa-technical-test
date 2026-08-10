@@ -11,7 +11,7 @@ Definir un plan de pruebas práctico y sostenible para validar la solución QA d
 ## Alcance
 - Validación funcional de los dos flujos críticos de SauceDemo.
 - Ciclo CRUD completo de reserva en Restful Booker.
-- Prueba de carga con 10 usuarios virtuales y ramp-up de 30s.
+- Prueba de carga con 10 usuarios virtuales y ramp-up de 30 segundos.
 - Generación de reportes y artefactos para auditoría.
 
 ## Enfoque de pruebas
@@ -26,18 +26,18 @@ Definir un plan de pruebas práctico y sostenible para validar la solución QA d
 
 - Creación de reserva con datos incompletos (faltan `firstname`/`lastname`) — esperar código de error y no crear recurso.
 - Creación de reserva con payload vacío — validar manejo y código de error apropiado.
-- Validaciones de autenticación: intentos de modificación/deleción sin token deben fallar.
+- Validaciones de autenticación: los intentos de modificación o eliminación sin token deben fallar.
 
 ### API
 - Ciclo de vida CRUD usando token de autenticación válido.
 - Validación de datos enviados vs. recibidos.
 - Verificación de estructura JSON y campos obligatorios.
-- Control de tiempos de respuesta bajo 2000ms.
-- Teardown garantizado con eliminación de reserva.
+- Control de tiempos de respuesta inferiores a 2000 ms.
+- Eliminación de la reserva al finalizar el flujo CRUD; como mejora pendiente, proteger el teardown con `try/finally`.
 
 ### Performance
 - Warm-up previo para despertar la API antes de la carga.
-- 10 usuarios virtuales, 30s ramp-up, 120s de duración.
+- 10 usuarios virtuales, ramp-up de 30 segundos y duración de 120 segundos.
 - Reporte de throughput, porcentaje de errores, tiempos promedio y percentiles.
 
 ### Definition of Ready (DoR)
@@ -64,7 +64,7 @@ Definir un plan de pruebas práctico y sostenible para validar la solución QA d
 
 ### Casos principales automatizados
 - Compra dinámica en SauceDemo con cálculo de total.
-- Gestión de carrito con validación de badge y eliminación de item más caro.
+- Gestión del carrito con validación del badge y eliminación del ítem más caro.
 - Flujo CRUD de reservas Restful Booker con limpieza de datos.
 
 ### Casos complementarios recomendados

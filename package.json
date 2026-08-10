@@ -10,7 +10,7 @@
     "test:ui:headed:chromium": "npx playwright test ui/tests --project=ui --headed --reporter=html --output=playwright-results",
     "test:ui:debug": "npx playwright test ui/tests/flujo1-checkout.spec.ts --project=ui --debug",
     "test:api": "npx playwright test api/tests --config=playwright.config.ts --project=api --reporter=list",
-    "test:performance": "jmeter -n -t performance/booking_load_test.jmx -l performance/results.jtl -e -o performance/reports/html-report",
+    "test:performance": "node scripts/run-performance.js",
     "test:all": "npm run test:api && npm run test:ui",
     "test:ci": "npm run test:all && npm run test:performance",
     "report": "npx playwright show-report",

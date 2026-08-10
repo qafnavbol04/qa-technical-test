@@ -93,7 +93,7 @@
   <p>Se generó un plan JMeter con dos Thread Groups:</p>
   <ul>
     <li><strong>Calentamiento</strong>: 1 usuario y 15 segundos.</li>
-    <li><strong>Carga</strong>: 10 usuarios, ramp-up 30s y duración 120s.</li>
+    <li><strong>Carga</strong>: 10 usuarios, ramp-up de 30 segundos y duración de 120 segundos.</li>
   </ul>
   <p>El objetivo es validar la estabilidad y latencia del endpoint <code>GET /booking</code> bajo carga.</p>
 </section>
@@ -102,7 +102,7 @@
   <h2>4. Casos de prueba implementados</h2>
   <h3>4.1 UI</h3>
   <table>
-    <thead><tr><th>Archivo</th><th>Describe</th><th>Test</th><th>Valida</th></tr></thead>
+    <thead><tr><th>Archivo</th><th>Descripción</th><th>Test</th><th>Valida</th></tr></thead>
     <tbody>
       <tr><td>ui/tests/flujo1-checkout.spec.ts</td><td>Compra extremo</td><td>Compra extremos y valida total</td><td>Selecciona el producto más barato y más caro, valida badge, checkout y total con impuestos.</td></tr>
       <tr><td>ui/tests/flujo2-cart.spec.ts</td><td>Carrito</td><td>Elimina caro y valida checkout</td><td>Agrega 3 productos dinámicos, elimina el más caro y verifica el error al continuar sin datos.</td></tr>
@@ -115,7 +115,7 @@
 
   <h3>4.2 API</h3>
   <table>
-    <thead><tr><th>Archivo</th><th>Describe</th><th>Test</th><th>Valida</th></tr></thead>
+    <thead><tr><th>Archivo</th><th>Descripción</th><th>Test</th><th>Valida</th></tr></thead>
     <tbody>
       <tr><td>api/tests/booking-crud.spec.ts</td><td>CRUD de reservas</td><td>CRUD completo</td><td>Autentica, crea, consulta, actualiza, consulta de nuevo y elimina una reserva. Verifica estado, esquema y tiempos.</td></tr>
       <tr><td>api/tests/booking-negative.spec.ts</td><td>Reservas negativas</td><td>Reserva incompleta falla</td><td>Verifica que el servicio rechaza una reserva sin campos obligatorios.</td></tr>
@@ -127,6 +127,21 @@
   </table>
 
   <p>Total de tests API: 6 pruebas.</p>
+
+  <h3>4.3 Performance</h3>
+  <table>
+    <thead><tr><th>Métrica</th><th>Resultado de la última ejecución</th></tr></thead>
+    <tbody>
+      <tr><td>Muestras</td><td>8.491, incluyendo 1 warm-up y 8.490 de carga principal.</td></tr>
+      <tr><td>Solicitudes exitosas</td><td>8.491 de 8.491 (100%).</td></tr>
+      <tr><td>Errores</td><td>0.</td></tr>
+      <tr><td>Promedio</td><td>126 ms.</td></tr>
+      <tr><td>P90 / P95</td><td>155 ms / 179 ms.</td></tr>
+      <tr><td>Throughput</td><td>70,7 solicitudes por segundo.</td></tr>
+      <tr><td>Máximo</td><td>6.149 ms, como valor aislado.</td></tr>
+    </tbody>
+  </table>
+  <p>Conclusión: el endpoint respondió sin errores y el P95 fue inferior a 2.000 ms. El máximo aislado recomienda repetir la medición en un ambiente controlado y construir una línea base histórica.</p>
 </section>
 
 <section class="section">
@@ -160,6 +175,7 @@
   <pre>npm run report</pre>
   <p>Para abrir el reporte JMeter:</p>
   <pre>Start-Process .performanceeportshtml-reportindex.html</pre>
+  <p>En Windows, <code>npm run test:performance</code> utiliza <code>scripts/run-performance.js</code>, que ejecuta JMeter mediante Java y limpia los resultados anteriores antes de iniciar una nueva medición.</p>
 </section>
 
 <section class="section">
@@ -178,8 +194,9 @@
   <pre>tsconfig.json</pre>
   <p>Puntos clave:</p>
   <ul>
-    <li><code>module</code>: Node16</li>
-    <li><code>moduleResolution</code>: node16</li>
+    <li><code>target</code>: ES2020</li>
+    <li><code>module</code>: CommonJS</li>
+    <li><code>moduleResolution</code>: node</li>
     <li><code>strict</code>: true</li>
     <li><code>skipLibCheck</code>: true</li>
   </ul>

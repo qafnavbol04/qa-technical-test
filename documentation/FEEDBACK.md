@@ -107,9 +107,9 @@ También integraría la automatización con la gestión de requerimientos o inci
 
 ## Resultado de performance observado
 
-En la ejecución registrada, JMeter entregó 10.193 muestras, 100% de solicitudes exitosas, cero errores, latencia promedio de 104 ms, P90 de 112 ms, P95 de 118 ms y throughput promedio de 84,8 solicitudes por segundo.
+En la ejecución registrada el 10/08/2026, JMeter entregó 8.491 muestras, 100% de solicitudes exitosas, cero errores, latencia promedio de 126 ms, P90 de 155 ms, P95 de 179 ms y throughput promedio de 70,7 solicitudes por segundo. También se observó un máximo aislado de 6.149 ms, lo que confirma la variabilidad normal de un servicio externo compartido.
 
-Ese resultado indica que `GET /booking` se comportó bien en la carga definida. Esta conclusión aplica al ambiente y momento de la medición; en un proyecto real conviene repetir la prueba en un entorno controlado y con un historial de comparación.
+Ese resultado indica que `GET /booking` soportó la carga definida en disponibilidad y en el comportamiento de la mayoría de solicitudes: el P95 fue inferior a 2.000 ms y no se observaron errores. El máximo aislado muestra que no conviene basar la conclusión en una sola ejecución; en un proyecto real repetiría la medición en un entorno controlado y construiría una línea base histórica.
 
 ## Conclusión personal
 

@@ -56,6 +56,8 @@ Para una instalación inicial sin `package-lock.json`, puede utilizarse `npm ins
    jmeter --version
    ```
 
+En Windows, el script `npm run test:performance` también puede ejecutar JMeter directamente desde una instalación local mediante Java. Si JMeter está en otra ubicación, definir la variable `JMETER_JAR` con la ruta completa a `ApacheJMeter.jar`.
+
 La configuración detallada de Playwright se encuentra en `playwright.config.ts` y la del pipeline en `.github/workflows/ci-cd-pipeline.yml`.
 
 ## Ejecución
@@ -181,13 +183,14 @@ El workflow `.github/workflows/ci-cd-pipeline.yml` está diseñado para ejecutar
 Los artifacts publicados son `playwright-report` y `jmeter-report`. Para demostrar un fallo controlado, ejecutar manualmente el workflow con `simulate_failure=true`; el paso finaliza con error intencional y los reportes se publican mediante `if: always()`.
 
 ### Evidencia de pipeline
-- Ejecución exitosa: `CI/CD Pipeline #9` ✅
-- Ejecución fallida controlada: `CI/CD Pipeline #7` con `simulate_failure=true` ❌
+- Ejecución exitosa: agregar la URL real del run de GitHub Actions ✅
+- Ejecución fallida controlada: agregar la URL real del run con `simulate_failure=true` ❌
+- Artifacts: `playwright-report` y `jmeter-report` descargables desde cada run.
 
 ## Resultados
 - UI: flujos de compra dinámica, carrito y validaciones negativas implementados.
 - API: ciclo CRUD completo con validaciones de status, estructura, datos, tiempos y errores.
-- Performance: resultado documentado en `performance/README_PERFORMANCE.md`, incluyendo promedio, P90, P95, throughput y porcentaje de errores.
+- Performance: última ejecución local con 8.491 muestras, 100% exitosas, promedio de 126 ms, P90 de 155 ms, P95 de 179 ms y throughput de 70,7 req/s; detalle en `performance/README_PERFORMANCE.md`.
 - Pipeline: ejecución exitosa y ejecución fallida controlada documentadas mediante GitHub Actions.
 
 ## Reportes y evidencia

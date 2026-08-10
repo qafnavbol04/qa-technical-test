@@ -24,6 +24,8 @@ Validar la capacidad de respuesta del endpoint `GET /booking` bajo carga concurr
 npm run test:performance
 ```
 
+En Windows, el script utiliza `scripts/run-performance.js` para ejecutar JMeter mediante Java y localizar `ApacheJMeter.jar` sin depender del comando `jmeter` en el `PATH`. El script limpia automáticamente el archivo JTL y el reporte anterior antes de iniciar una nueva ejecución. Si JMeter está instalado en otra ubicación, definir `JMETER_JAR` con la ruta completa al archivo `ApacheJMeter.jar`.
+
 ## Criterios de aceptación
 
 - Todos los requests deben retornar HTTP 200.
@@ -37,21 +39,21 @@ Este repositorio incluye el plan de JMeter en `performance/booking_load_test.jmx
 - Archivo de resultados JTL: `performance/results.jtl`
 - Reporte HTML: `performance/reports/html-report`
 
-Resultado verificado en esta ejecución local:
+Resultado verificado en la ejecución local del 10/08/2026:
 
-- Muestras ejecutadas: 10,193
-- Requests exitosos: 10,193 / 10,193 (100%)
+- Muestras ejecutadas: 8,491, incluyendo 1 muestra de warm-up y 8,490 de carga principal
+- Requests exitosos: 8,491 / 8,491 (100%)
 - Errores: 0
-- Throughput promedio: 84.8 req/s
-- Latencia promedio: 104 ms
-- P90: 112 ms
-- P95: 118 ms
-- Máxima latencia observada: 1183 ms
+- Throughput promedio: 70.7 req/s
+- Latencia promedio: 126 ms
+- P90: 155 ms
+- P95: 179 ms
+- Máxima latencia observada: 6,149 ms
 - Tiempo total de ejecución: 120 segundos
 
 ### Conclusión
 
-Con base en la ejecución verificada, el endpoint soporta adecuadamente la carga definida: el 100% de las 10,193 solicitudes fue exitoso, el P95 fue inferior a 2,000 ms y no se observaron errores durante los 120 segundos. Estos resultados representan una ejecución local; en un proyecto real se repetiría la medición en un entorno controlado y con umbrales históricos.
+Con base en la ejecución verificada, el endpoint soporta la carga definida en términos de disponibilidad: el 100% de las 8,491 solicitudes fue exitoso y el P95 fue de 179 ms, inferior a 2,000 ms. Se observó un máximo aislado de 6,149 ms, por lo que el servicio debe analizarse con varias ejecuciones y una línea base antes de concluir sobre su comportamiento general. Estos resultados representan una ejecución local contra un servicio externo.
 
 El reporte HTML quedó generado en `performance/reports/html-report/index.html` y puede compartirse directamente o comprimirse para adjuntarlo a una release.
 
@@ -82,8 +84,8 @@ Plantilla de resumen de performance (pegala en este archivo o en la release note
 - Entorno: CI / Local
 - Comando ejecutado: `npm run test:performance`
 - Usuarios virtuales: 10
-- Ramp-up: 30s
-- Duración total: 120s
+- Ramp-up: 30 segundos
+- Duración total: 120 segundos
 - Throughput (req/s): <valor>
 - % Requests exitosas: <valor>
 - Media de latencia: <valor> ms
