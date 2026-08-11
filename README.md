@@ -98,7 +98,7 @@ npx playwright test ui/tests/flujo2-cart.spec.ts --project=ui
 
 ### Nombres de pruebas UI actuales
 - `Compra extremo`: Compra extremos y valida total
-- `Carrito`: Elimina caro y valida checkout
+- `Carrito`: Elimina carro y valida checkout
 - `Checkout negativo`: Valida campos faltantes
 - `Login negativo`: Muestra error credenciales inválidas
 
@@ -209,7 +209,44 @@ Los artifacts publicados son `playwright-report` y `jmeter-report`. Para demostr
 - `documentation/TEST_PLAN.md`
 - `documentation/DEFECTS.md`
 - `documentation/FEEDBACK.md`
-- `performance/README_PERFORMANCE.md`
 
-## Observaciones
-Este repositorio está preparado para evolucionar hacia un enfoque data-driven y una capa de objetos de prueba más amplia en futuras iteraciones.
+## Performance
+Este repositorio incluye una prueba de carga de Apache JMeter para el endpoint `GET /booking` de Restful Booker.
+
+### Artefactos de performance
+- Plan JMeter: `performance/booking_load_test.jmx`
+- Resultados raw: `performance/results.jtl`
+- Reporte HTML: `performance/reports/html-report`
+
+### Ejecución
+Para ejecutar la prueba de carga:
+```bash
+npm run test:performance
+```
+
+En Windows, el comando puede ejecutar JMeter mediante Java local y requiere `JMETER_JAR` apuntando a `ApacheJMeter.jar` si no está en el `PATH`.
+
+### Configuración de la prueba
+- Usuarios virtuales: 10
+- Ramp-up: 30 segundos
+- Duración: 120 segundos
+- Warm-up: 15 segundos
+
+### Criterios básicos
+- Todos los requests deben retornar HTTP 200.
+- La mayoría de respuestas deben mantenerse por debajo de 2000 ms.
+- El servicio debe permanecer estable durante los 120 segundos.
+
+### Reportes
+Abrir el reporte HTML de JMeter en Windows PowerShell:
+```powershell
+Start-Process .\performance\reports\html-report\index.html
+```
+
+Comprimir el reporte para subirlo como evidencia:
+```powershell
+Compress-Archive -Path performance\reports\html-report\* -DestinationPath performance\reports\html-report.zip -Force
+```
+
+> Nota: la documentación de performance se integra aquí en el `README.md` para mantener un único documento central del proyecto. No existe un `performance/README` adicional.
+

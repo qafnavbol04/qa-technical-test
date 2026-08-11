@@ -35,8 +35,15 @@ export class InventoryPage {
 
     prices.sort((a, b) => a.value - b.value);
 
-    await items.nth(prices[0].index).locator('button').click();
-    await items.nth(prices[prices.length - 1].index).locator('button').click();
+    const lowestBtn = items.nth(prices[0].index).locator('button');
+    await lowestBtn.scrollIntoViewIfNeeded();
+    await expect(lowestBtn).toBeVisible();
+    await lowestBtn.click();
+
+    const highestBtn = items.nth(prices[prices.length - 1].index).locator('button');
+    await highestBtn.scrollIntoViewIfNeeded();
+    await expect(highestBtn).toBeVisible();
+    await highestBtn.click();
 
     return {
       lowestPrice: prices[0].value,
@@ -59,7 +66,10 @@ export class InventoryPage {
     const selected = prices.slice(0, 3);
 
     for (const product of selected) {
-      await items.nth(product.index).locator('button').click();
+      const btn = items.nth(product.index).locator('button');
+      await btn.scrollIntoViewIfNeeded();
+      await expect(btn).toBeVisible();
+      await btn.click();
     }
 
     return selected.map((product) => product.value);

@@ -110,7 +110,7 @@ const { chromium } = require('playwright');
     <thead><tr><th>Archivo</th><th>Descripción</th><th>Test</th><th>Valida</th></tr></thead>
     <tbody>
       <tr><td>ui/tests/flujo1-checkout.spec.ts</td><td>Compra extremo</td><td>Compra extremos y valida total</td><td>Selecciona el producto más barato y más caro, valida badge, checkout y total con impuestos.</td></tr>
-      <tr><td>ui/tests/flujo2-cart.spec.ts</td><td>Carrito</td><td>Elimina caro y valida checkout</td><td>Agrega 3 productos dinámicos, elimina el más caro y verifica el error al continuar sin datos.</td></tr>
+      <tr><td>ui/tests/flujo2-cart.spec.ts</td><td>Carrito</td><td>Elimina carro y valida checkout</td><td>Agrega 3 productos dinámicos, elimina el más caro y verifica el error al continuar sin datos.</td></tr>
       <tr><td>ui/tests/checkout-negative.spec.ts</td><td>Checkout negativo</td><td>Valida campos faltantes</td><td>Verifica mensajes de error cuando faltan nombre, apellido y código postal.</td></tr>
       <tr><td>ui/tests/login-negative.spec.ts</td><td>Login negativo</td><td>Muestra error credenciales inválidas</td><td>Valida error de login con credenciales inválidas y permanencia en la página de login.</td></tr>
     </tbody>
