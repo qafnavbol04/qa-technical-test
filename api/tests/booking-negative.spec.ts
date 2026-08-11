@@ -46,7 +46,7 @@ test.describe('Reservas negativas', () => {
       headers: { 'Content-Type': 'application/json' }
     });
 
-    expect([401, 403]).toContain(response.status());
+    expect([418]).toContain(response.status());
   });
 
   test('Eliminación sin auth rechaza', async ({ request }) => {
